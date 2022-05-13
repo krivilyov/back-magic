@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: webserver_bm
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:cached
+      - ../static:/var/www/project/static
+    depends_on:
+      - php
+
+  php:
+    build: ./php
+    container_name: php7.4-fpm
+    volumes:
+      - ../:/var/www/project:cached
